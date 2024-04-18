@@ -1,0 +1,11 @@
+projects:
+    resource:
+        path: ../src/Project/Application/Controller/
+        namespace: Project\Application\Controller
+    type: attribute
+
+users:
+    resource:
+        path: ../src/Auth/Application/Controller/
+        namespace: Auth\Application\Controller
+    type: attribute

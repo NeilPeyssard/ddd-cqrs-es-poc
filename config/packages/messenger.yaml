@@ -1,0 +1,36 @@
+framework:
+    messenger:
+        default_bus: command.bus
+        buses:
+            command.bus: ~
+            query.bus: ~
+            event.bus:
+                default_middleware:
+                    enabled: true
+                    allow_no_handlers: true
+                    allow_no_senders: true
+
+        transports:
+            async: '%env(MESSENGER_TRANSPORT_DSN)%'
+            sync: 'sync://'
+            # failed: 'doctrine://default?queue_name=failed'
+
+        routing:
+            'Project\Domain\Command\CreateProject': sync
+            'Project\Domain\Command\ReadProject': sync
+            'Project\Domain\Event\CreateProjectEvent': sync
+            'Auth\Domain\Command\AuthorizeClient': sync
+            'Auth\Domain\Command\CreateOAuthCode': sync
+            'Auth\Domain\Command\ExchangeAuthCode': sync
+            'Auth\Domain\Command\FindOAuthAccessToken': sync
+            'Auth\Domain\Command\FindUserByEmail': sync
+            'Auth\Domain\Event\CreateUserEvent': sync
+
+#when@test:
+#    framework:
+#        messenger:
+#            transports:
+#                # replace with your transport name here (e.g., my_transport: 'in-memory://')
+#                # For more Messenger testing tools, see https://github.com/zenstruck/messenger-test
+#                async: 'in-memory://'
+#                sync: 'in-memory://'

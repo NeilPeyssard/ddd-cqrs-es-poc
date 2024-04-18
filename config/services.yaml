@@ -1,0 +1,80 @@
+parameters:
+
+services:
+    _defaults:
+        autowire: true
+        autoconfigure: true
+
+    App\:
+        resource: '../src/App/'
+        exclude:
+            - '../src/App/DependencyInjection/'
+            - '../src/App/Entity/'
+            - '../src/App/Kernel.php'
+
+    App\Factory\ElasticSearchClientFactory: ~
+
+    Elastica\Client:
+        factory: ['@App\Factory\ElasticSearchClientFactory', 'createClient']
+
+    Shared\:
+        resource: '../src/Shared/'
+
+    Project\:
+        resource: '../src/Project/'
+
+    Project\Application\Controller\:
+        resource: '../src/Project/Application/Controller/'
+        tags: ['controller.service_arguments']
+
+    Project\Domain\Command\CreateProjectHandler:
+        tags: ['messenger.message_handler']
+
+    Project\Domain\Command\ReadProjectHandler:
+        tags: ['messenger.message_handler']
+
+    Project\Infrastructure\Projector\ProjectProjector:
+        tags:
+            -
+                name: 'messenger.message_handler'
+                bus: 'event.bus'
+                method: 'create'
+
+    Auth\:
+        resource: '../src/Auth/'
+
+    Auth\Application\Controller\:
+        resource: '../src/Auth/Application/Controller/'
+        tags: ['controller.service_arguments']
+
+    Auth\Domain\Command\AuthorizeClientHandler:
+        tags: [ 'messenger.message_handler' ]
+
+    Auth\Domain\Command\CreateOAuthCodeHandler:
+        tags: [ 'messenger.message_handler' ]
+
+    Auth\Domain\Command\ExchangeAuthCodeHandler:
+        tags: [ 'messenger.message_handler' ]
+
+    Auth\Domain\Command\FindOAuthAccessTokenByTokenHandler:
+        tags: [ 'messenger.message_handler' ]
+
+    Auth\Domain\Command\FindOAuthAccessTokenHandler:
+        tags: [ 'messenger.message_handler' ]
+
+    Auth\Domain\Command\FindUserByEmailHandler:
+        tags: [ 'messenger.message_handler' ]
+
+    Auth\Infrastructure\Projector\OAuthCodeProjector:
+        tags:
+            -
+                name: 'messenger.message_handler'
+                bus: 'event.bus'
+                method: 'create'
+
+    Auth\Infrastructure\Projector\OAuthAccessTokenProjector:
+        tags:
+            -
+                name: 'messenger.message_handler'
+                bus: 'event.bus'
+                method: 'create'

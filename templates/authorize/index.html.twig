@@ -1,0 +1,9 @@
+{% extends "base.html.twig" %}
+
+{% block body %}
+    {{ form_start(form) }}
+    <h1>Authorize client</h1>
+    <p>Client {{ oAuthClient.name }} wants to access your data.</p>
+    <button type="submit">Authorize client</button>
+    {{ form_end(form) }}
+{% endblock %}

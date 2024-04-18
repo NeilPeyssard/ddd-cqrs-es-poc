@@ -1,0 +1,30 @@
+default:
+    autoload:
+        'Tests': "%paths.base%/tests/Functional"
+    suites:
+        domain_features:
+            paths:
+                - "%paths.base%/features"
+            contexts:
+                - Tests\Functional\OAuthContext
+    extensions:
+        FriendsOfBehat\SymfonyExtension:
+            bootstrap: tests/bootstrap.php
+            kernel:
+                environment: test
+
+#default:
+#    autoload:
+#        'Project\Tests': "%paths.base%/tests/Project"
+#    suites:
+#        domain_features:
+#            paths:
+#                - "%paths.base%/features"
+#            contexts:
+#                - Project\Tests\Application\Controller\ProjectControllerContext
+#                - Project\Tests\Domain\ProjectContext
+#    extensions:
+#        FriendsOfBehat\SymfonyExtension:
+#            bootstrap: tests/bootstrap.php
+#            kernel:
+#                environment: test
